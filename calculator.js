@@ -13,16 +13,23 @@ class Calculator{
 
   }
   appendNumber(number){
-    this.current = number
+    if (number === '.'&& this.current.includes('.'))return
+    this.current = this.current.toString()+ number.toString()
   }
   chooseOperation(operation){
-
+    if(this.current === '')return
+    this.operation= operation
+    this.previous = this.current
+    this.current=''
   }
   compute(){
 
   }
   updateDisplay(){
        this.currentTextElement.innerText=this.current
+       this.operation = this.operation
+       this.previousTextElement.innerText= this.previous
+
   }
 }
 const numberButtons = document.querySelectorAll('[data-number]')
@@ -40,4 +47,11 @@ numberButtons.forEach(button=>{
         calculator.appendNumber(button.innerText)
         calculator.updateDisplay()
     })
+})
+
+operationButtons.forEach(button=>{
+  button.addEventListener('click',() =>{
+    calculator.chooseOperation(button.innerText)
+    calculator.updateDisplay()
+  })
 })
